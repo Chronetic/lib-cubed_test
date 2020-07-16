@@ -14,8 +14,9 @@
   </thead>
 
   <tbody>
-    <% @comics.each do |comic| %>
+    <% @comics.each.with_index(1) do |comic, index| %>
       <tr>
+				<td><%= "#{index}" %></td>
         <td><%= comic.title %></td>
         <td>| <%= comic.description %></td>
         <td>| <%= comic.author %></td>

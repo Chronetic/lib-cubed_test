@@ -11,8 +11,9 @@
   </thead>
 
   <tbody>
-    <% @books.each do |book| %>
+    <% @books.each.with_index(1) do |book, index| %>
       <tr>
+				<td><%= "#{index}" %></td>
         <td><%= book.title %></td>
         <td> | <%= link_to 'Show', book %></td>
         <td> | <%= link_to 'Edit', edit_book_path(book) %></td>

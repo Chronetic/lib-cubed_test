@@ -15,8 +15,9 @@
   </thead>
 
   <tbody>
-    <% @shows.each do |show| %>
+    <% @shows.each.with_index(1) do |show, index| %>
       <tr>
+				<td><%= "#{index}" %></td>
         <td><%= show.title %></td>
         <td><%= show.description %></td>
         <td><%= show.director %></td>

@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @show.title %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @show.description %>
+</p>
+
+<p>
+  <strong>Director:</strong>
+  <%= @show.director %>
+</p>
+
+<p>
+  <strong>Writer:</strong>
+  <%= @show.writer %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @show.user_id %>
+</p>
+
+<%= link_to 'Edit', edit_show_path(@show) %> |
+<%= link_to 'Back', shows_path %>

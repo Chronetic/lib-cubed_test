@@ -1,13 +1,37 @@
-<head>
-	Homepage
-</head>
-
 <body>
-	<p>
-		<strong>Lists:</strong><br>
-		<%= link_to 'Movies', movies_path %><br>
-		<%= link_to 'Shows', shows_path %><br>
-		<%= link_to 'Books', books_path %><br>
-		<%= link_to 'Comics', comics_path %><br>
-	</p>
+	<section class="section">
+		<p class="has-text-centered title is-2">Your Lists</p>
+		<div class="container">
+			<div class="columns is-vcentered">
+				<div class="column">
+					<%= link_to movies_path, class: "navbar_item" do %>
+					<div class="button is-large is-fullwidth">
+						Movies
+					</div>
+					<% end %>
+				</div>
+				<div class="column">
+					<%= link_to shows_path, class: "navbar_item" do %>
+					<div class="button is-large is-fullwidth">
+						Shows
+					</div>
+					<% end %>
+				</div>
+				<div class="column">
+					<%= link_to books_path, class: "navbar_item" do %>
+					<div class="button is-large is-fullwidth">
+						Books
+					</div>
+					<% end %>
+				</div>
+				<div class="column">
+					<%= link_to comics_path, class: "navbar_item" do %>
+					<div class="button is-large is-fullwidth">
+						Comics
+					</div>
+					<% end %>
+				</div>
+			</div>
+		</div>
+	</section
 </body>

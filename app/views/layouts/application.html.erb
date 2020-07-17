@@ -23,8 +23,8 @@
 		<% end %>
 		<nav class="navbar is-info">
 			<div class="navbar-brand">
-				<%= link_to 'home', class: "navbar_item" do %>
-					<h1 class="title is-4">Lib-Cubed</h1>
+				<%= link_to "/home", class: "navbar_item" do %>
+					<h1 class="title is-1">Lib-Cubed</h1>
 				<% end %>
 				<div class="navbar-burger burger" data-target="navbarExample">
 					<span></span>
@@ -37,15 +37,18 @@
 				<div class="navbar-end">
 					<div class="navbar-item">
 						<div class="field is-grouped">
+								<% if user_signed_in? %>
 								<p class="control">
 									<%= link_to "Logout", destroy_user_session_path, method: :delete, class:"button is-info" %>
 								</p>
+								<% else %>
 								<p class="control">
 									<%= link_to 'Sign In', new_user_session_path, class: "button is-info" %>
 								</p>
 								<p class="control">
 									<%= link_to 'Sign Up', new_user_registration_path, class: "button is-info" %>
 								</p>
+								<% end %>
 						</div>
 					</div>
 				</div>
@@ -53,4 +56,16 @@
 		</nav>
     <%= yield %>
   </body>
+	<footer class="footer">
+  <div class="content has-text-centered">
+		<p>
+			<%= link_to "About", 'about' %>
+			|
+			<%= link_to "Contact", 'contact' %>
+		</p>
+    <p>
+      <strong>Lib-Cubed</strong> by Tyler Brigalli.
+    </p>
+  </div>
+</footer>
 </html>

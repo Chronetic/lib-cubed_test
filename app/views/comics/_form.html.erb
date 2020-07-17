@@ -8,6 +8,7 @@
     <%= f.input :description %>
     <%= f.input :author %>
     <%= f.input :artist %>
+		<%= f.input :user_id, :input_html => { :value => "#{current_user.id}" } %>
   </div>
 
   <div class="form-actions">

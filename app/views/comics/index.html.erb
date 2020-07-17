@@ -16,6 +16,7 @@
   <tbody>
     <% @comics.each.with_index(1) do |comic, index| %>
       <tr>
+				<% if comic.user_id == current_user.id %>
 				<td><%= "#{index}" %></td>
         <td><%= comic.title %></td>
         <td>| <%= comic.description %></td>
@@ -24,7 +25,8 @@
         <td>| <%= link_to 'Show', comic %> |</td>
         <td>| <%= link_to 'Edit', edit_comic_path(comic) %> |</td>
         <td>| <%= link_to 'Destroy', comic, method: :delete, data: { confirm: 'Are you sure?' } %> ||</td>
-      </tr>
+				<% end %>
+			</tr>
     <% end %>
   </tbody>
 </table>

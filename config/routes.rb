@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   resources :comics
   resources :books
 	resources :pages
+	resources :users, only: [:show, :index]
 
 
 	controller :pages do

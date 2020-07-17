@@ -2,9 +2,10 @@
 
 <h1>Movies</h1>
 
-<table>
+<table class="table is-striped">
   <thead>
     <tr>
+			<th></th>
       <th>Title</th>
       <th>Director</th>
       <th>Writer</th>
@@ -20,7 +21,7 @@
         <td><%= movie.title %></td>
         <td><%= movie.director %></td>
         <td><%= movie.writer %></td>
-				<td>| <%= movie.user_id %></td>
+				<td><%= movie.user_id %></td>
         <td><%= link_to 'Show', movie %></td>
         <td><%= link_to 'Edit', edit_movie_path(movie) %></td>
         <td><%= link_to 'Destroy', movie, method: :delete, data: { confirm: 'Are you sure?' } %></td>

@@ -14,12 +14,31 @@ class MoviesController < ApplicationController
 
   # GET /movies/new
   def new
-    @movie = Movie.new
-  end
+		if params[:title]
+			Tmdb::Api.key(ENV["pusher_key"])
+			@search = Tmdb::Search.new
+			@search.resource("movie")
+			@search.query(title: params[:title])
+			@search.fetch
+		else
+    	@movie = Movie.new
+  	end
+	end
+
+	def add
+		# Add through API
+		@movie = Movie.new
+	end
 
   # GET /movies/1/edit
   def edit
   end
+
+	def create_movie
+		respond_to do |format|
+			format.js {render layout: false}
+		end
+	end
 
   # POST /movies
   # POST /movies.json

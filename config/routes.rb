@@ -8,6 +8,9 @@ Rails.application.routes.draw do
 	resources :pages
 	resources :users, only: [:show, :index]
 
+	controller :movies do
+		get :create_movie
+	end
 
 	controller :pages do
 		get :home

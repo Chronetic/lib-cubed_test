@@ -7,21 +7,25 @@
     <tr>
 			<th></th>
       <th>Title</th>
-      <th>Director</th>
-      <th>Writer</th>
+      <th>Tagline</th>
+      <th>Runtime</th>
+			<th>Rating</th>
+			<th>Released</th>
       <th colspan="3"></th>
     </tr>
   </thead>
 
   <tbody>
 		<% #fix index %>
-    <% @movies.each.with_index(1) do |movie, index| %>
+    <% @movies.each.with_index(-8) do |movie, index| %>
       <tr>
 				<% if movie.user_id == current_user.id %>
 					<td><%= "#{index}" %></td>
 	        <td><%= movie.title %></td>
-	        <td><%= movie.director %></td>
-	        <td><%= movie.writer %></td>
+	        <td><%= movie.tagline %></td>
+	        <td><%= movie.runtime %></td>
+					<td><%= movie.movierating %></td>
+					<td><%= movie.release_date %></td>
 					<td><%= movie.user_id %></td>
 	        <td><%= link_to 'Show', movie %></td>
 	        <td><%= link_to 'Edit', edit_movie_path(movie) %></td>

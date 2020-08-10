@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_16_210009) do
+ActiveRecord::Schema.define(version: 2020_08_10_175724) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -60,6 +60,13 @@ ActiveRecord::Schema.define(version: 2020_07_16_210009) do
     t.integer "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "imdb_id"
+    t.string "imdb"
+    t.integer "runtime"
+    t.integer "rating"
+    t.string "tagline"
+    t.string "release_date"
+    t.float "movierating"
   end
 
   create_table "shows", force: :cascade do |t|

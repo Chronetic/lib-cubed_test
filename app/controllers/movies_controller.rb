@@ -1,6 +1,6 @@
 class MoviesController < ApplicationController
   before_action :set_movie, only: [:show, :edit, :update, :destroy]
-
+	Tmdb::Api.key("87629cf821826e9275d3da823078cec7")
   # GET /movies
   # GET /movies.json
   def index
@@ -14,19 +14,6 @@ class MoviesController < ApplicationController
 
   # GET /movies/new
   def new
-		if params[:title]
-			Tmdb::Api.key(ENV["pusher_key"])
-			@search = Tmdb::Search.new
-			@search.resource("movie")
-			@search.query(title: params[:title])
-			@search.fetch
-		else
-    	@movie = Movie.new
-  	end
-	end
-
-	def add
-		# Add through API
 		@movie = Movie.new
 	end
 
@@ -43,7 +30,21 @@ class MoviesController < ApplicationController
   # POST /movies
   # POST /movies.json
   def create
+		result = Tmdb::Movie.detail(movie_params[:imdb])
+	  #puts result
+		#test = result["original_title"]
+		#puts test
+		#params[:title] = test
+		#puts params
+		#puts details
+		#movie_params[:title] = Tmdb::Find.imdb_id(movie_params[:imdb])[1]
     @movie = Movie.new(movie_params)
+		@movie.title = result["original_title"]
+		@movie.description = result["overview"]
+		@movie.tagline = result["tagline"]
+		@movie.runtime = result["runtime"]
+		@movie.movierating = result["vote_average"]
+		@movie.release_date = result["release_date"]
 
     respond_to do |format|
       if @movie.save
@@ -59,16 +60,19 @@ class MoviesController < ApplicationController
   # PATCH/PUT /movies/1
   # PATCH/PUT /movies/1.json
   def update
-    respond_to do |format|
-      if @movie.update(movie_params)
-        format.html { redirect_to @movie, notice: 'Movie was successfully updated.' }
-        format.json { render :show, status: :ok, location: @movie }
-      else
-        format.html { render :edit }
-        format.json { render json: @movie.errors, status: :unprocessable_entity }
-      end
-    end
-  end
+		respond_to do |format|
+			result = Tmdb::Movie.detail(movie_params[:imdb])
+			@movie.title = result["original_title"]
+			@movie.description = result["overview"]
+			@movie.tagline = result["tagline"]
+			@movie.runtime = result["runtime"]
+			@movie.movierating = result["vote_average"]
+			@movie.release_date = result["release_date"]
+			@movie.save
+	    format.html { redirect_to @movie, notice: 'Movie was successfully updated.' }
+	    format.json { render :show, status: :ok, location: @movie }
+		end
+	end
 
   # DELETE /movies/1
   # DELETE /movies/1.json
@@ -88,6 +92,6 @@ class MoviesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def movie_params
-      params.require(:movie).permit(:title, :description, :director, :writer, :user_id)
+      params.require(:movie).permit(:title, :description, :runtime, :movierating, :tagline, :release_date, :user_id, :imdb)
     end
 end

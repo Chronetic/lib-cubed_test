@@ -1,5 +1,6 @@
 class BooksController < ApplicationController
   before_action :set_book, only: [:show, :edit, :update, :destroy]
+	require 'openlibrary'
 
   # GET /books
   # GET /books.json
@@ -24,7 +25,36 @@ class BooksController < ApplicationController
   # POST /books
   # POST /books.json
   def create
-    @book = Book.new(book_params)
+		client = Goodreads::Client.new(api_key: "rSkvvZY8Wx27zcj4AfHA", api_secret: "S5WOpmY8pVtaEu1IwNn51DBafjoEIbjuxZdE6sNM")
+		book = client.book_by_isbn("9780765326355")
+		@book = Book.new(book_params)
+
+#		puts book.title
+#		puts book.description
+#		puts book.work.original_title
+#		puts book.num_pages
+#		puts book.authors.author.name
+#		puts book.publisher
+
+		@book.titlelong = book.title
+		puts @book.titlelong
+		@book.description = book.description
+		@book.title = book.work.original_title
+		@book.pages = book.num_pages
+		@book.author = book.authors.author.name
+		@book.publisher = book.publisher
+
+		#book.search("9780545790352", 5)
+		#puts book.books.first.get_title
+		#@show = Show.new(show_params)
+		#@show.title = result["original_name"]
+		#@show.description = result["overview"]
+		#@show.seasons = result["number_of_seasons"]
+		#@show.episodes = result["number_of_episodes"]
+		#@show.episoderuntime = result["episode_run_time"].dig(0)
+		#@show.showrating = result["vote_average"]
+		#@show.airdate = result["first_air_date"]
+
 
     respond_to do |format|
       if @book.save

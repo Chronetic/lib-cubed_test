@@ -48,17 +48,21 @@ class ShowsController < ApplicationController
 
   # PATCH/PUT /shows/1
   # PATCH/PUT /shows/1.json
-  def update
-    respond_to do |format|
-      if @show.update(show_params)
-        format.html { redirect_to @show, notice: 'Show was successfully updated.' }
-        format.json { render :show, status: :ok, location: @show }
-      else
-        format.html { render :edit }
-        format.json { render json: @show.errors, status: :unprocessable_entity }
-      end
-    end
-  end
+	def update
+		respond_to do |format|
+			result = Tmdb::TV.detail(show_params[:tmdbid])
+			@show.title = result["original_name"]
+			@show.description = result["overview"]
+			@show.seasons = result["number_of_seasons"]
+			@show.episodes = result["number_of_episodes"]
+			@show.episoderuntime = result["episode_run_time"].dig(0)
+			@show.showrating = result["vote_average"]
+			@show.airdate = result["first_air_date"]
+			@show.save
+	    format.html { redirect_to @show, notice: 'Show was successfully updated.' }
+	    format.json { render :show, status: :ok, location: @show }
+		end
+	end
 
   # DELETE /shows/1
   # DELETE /shows/1.json

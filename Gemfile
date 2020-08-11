@@ -27,6 +27,9 @@ gem 'bulma-rails', '~> 0.9.0'
 gem 'simple_form', '~> 5.0', '>= 5.0.2'
 gem 'gravatar_image_tag', '~> 1.2'
 gem 'devise', '~> 4.7', '>= 4.7.2'
+gem 'google_book', '~> 0.3.18'
+gem 'openlibrary'
+gem 'goodreads', '~> 0.7.0'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'

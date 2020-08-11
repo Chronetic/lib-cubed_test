@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_11_162428) do
+ActiveRecord::Schema.define(version: 2020_08_11_180903) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -33,14 +33,8 @@ ActiveRecord::Schema.define(version: 2020_08_11_162428) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
-  create_table "books", force: :cascade do |t|
-    t.string "title"
-    t.text "description"
-    t.string "author"
-    t.integer "user_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
+# Could not dump table "books" because of following StandardError
+#   Unknown type 'sting' for column 'publisher'
 
   create_table "comics", force: :cascade do |t|
     t.string "title"

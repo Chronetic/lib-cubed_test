@@ -1,5 +1,5 @@
 <p id="notice"><%= notice %></p>
-
+<!-- Add call to api to grab creators and other info -->
 <p>
   <strong>Title:</strong>
   <%= @show.title %>
@@ -11,13 +11,31 @@
 </p>
 
 <p>
-  <strong>Director:</strong>
-  <%= @show.director %>
+  <strong>Seasons:</strong>
+  <%= @show.seasons %>
 </p>
 
 <p>
-  <strong>Writer:</strong>
-  <%= @show.writer %>
+  <strong>Episodes:</strong>
+  <%= @show.episodes %>
+</p>
+
+<p>
+  <strong>Episode Runtime:</strong>
+  <%= @show.episoderuntime %>
+	<body>
+		Minutes
+	</body>
+</p>
+
+<p>
+  <strong>Rating:</strong>
+  <%= @show.showrating %>
+</p>
+
+<p>
+  <strong>Airdate:</strong>
+  <%= @show.airdate %>
 </p>
 
 <p>

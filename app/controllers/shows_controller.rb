@@ -1,5 +1,6 @@
 class ShowsController < ApplicationController
   before_action :set_show, only: [:show, :edit, :update, :destroy]
+	Tmdb::Api.key("87629cf821826e9275d3da823078cec7")
 
   # GET /shows
   # GET /shows.json
@@ -24,7 +25,15 @@ class ShowsController < ApplicationController
   # POST /shows
   # POST /shows.json
   def create
-    @show = Show.new(show_params)
+		result = Tmdb::TV.detail(show_params[:tmdbid])
+		@show = Show.new(show_params)
+		@show.title = result["original_name"]
+		@show.description = result["overview"]
+		@show.seasons = result["number_of_seasons"]
+		@show.episodes = result["number_of_episodes"]
+		@show.episoderuntime = result["episode_run_time"].dig(0)
+		@show.showrating = result["vote_average"]
+		@show.airdate = result["first_air_date"]
 
     respond_to do |format|
       if @show.save
@@ -69,6 +78,6 @@ class ShowsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def show_params
-      params.require(:show).permit(:title, :description, :director, :writer, :user_id)
+      params.require(:show).permit(:title, :description, :seasons, :episodes, :tmdbid, :showrating, :episoderuntime, :airdate, :user_id)
     end
 end

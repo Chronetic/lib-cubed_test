@@ -1,15 +1,11 @@
+<p>Search for a Tv Show</p>
 
 <%= simple_form_for(@show) do |f| %>
   <%= f.error_notification %>
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
   <div class="form-inputs">
-    <%= f.input :title %>
-    <%= f.input :description %>
-    <%= f.input :seasons %>
-    <%= f.input :episodes %>
-		<%= f.input :episoderuntime %>
-		<%= f.input :showrating %>
+    <%= f.input :tmdbid, label: 'TMDB Id:'%>
 		<%= f.input :user_id, :input_html => { :value => "#{current_user.id}" } %>
   </div>
 

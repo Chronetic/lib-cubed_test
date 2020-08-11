@@ -1,4 +1,5 @@
 class BooksController < ApplicationController
+	include ActionView::Helpers::TextHelper
   before_action :set_book, only: [:show, :edit, :update, :destroy]
 	require 'openlibrary'
 
@@ -26,7 +27,7 @@ class BooksController < ApplicationController
   # POST /books.json
   def create
 		client = Goodreads::Client.new(api_key: "rSkvvZY8Wx27zcj4AfHA", api_secret: "S5WOpmY8pVtaEu1IwNn51DBafjoEIbjuxZdE6sNM")
-		book = client.book_by_isbn("9780765326355")
+		book = client.book_by_isbn(book_params[:isbn])
 		@book = Book.new(book_params)
 
 #		puts book.title
@@ -37,8 +38,8 @@ class BooksController < ApplicationController
 #		puts book.publisher
 
 		@book.titlelong = book.title
-		puts @book.titlelong
-		@book.description = book.description
+		@book.description = strip_tags(book.description)
+		puts @book.description#.gsub(/<br\s*\?>/, '')
 		@book.title = book.work.original_title
 		@book.pages = book.num_pages
 		@book.author = book.authors.author.name
@@ -70,15 +71,19 @@ class BooksController < ApplicationController
   # PATCH/PUT /books/1
   # PATCH/PUT /books/1.json
   def update
-    respond_to do |format|
-      if @book.update(book_params)
-        format.html { redirect_to @book, notice: 'Book was successfully updated.' }
-        format.json { render :show, status: :ok, location: @book }
-      else
-        format.html { render :edit }
-        format.json { render json: @book.errors, status: :unprocessable_entity }
-      end
-    end
+		respond_to do |format|
+			client = Goodreads::Client.new(api_key: "rSkvvZY8Wx27zcj4AfHA", api_secret: "S5WOpmY8pVtaEu1IwNn51DBafjoEIbjuxZdE6sNM")
+			book = client.book_by_isbn(book_params[:isbn])
+			@book.titlelong = book.title
+			@book.description = strip_tags(book.description)
+			@book.title = book.work.original_title
+			@book.pages = book.num_pages
+			@book.author = book.authors.author.name
+			@book.publisher = book.publisher
+			@book.save
+			format.html { redirect_to @book, notice: 'Book was successfully updated.' }
+			format.json { render :show, status: :ok, location: @book }
+		end
   end
 
   # DELETE /books/1
@@ -99,6 +104,6 @@ class BooksController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def book_params
-      params.require(:book).permit(:title, :description, :author, :user_id)
+      params.require(:book).permit(:title, :description, :author, :isbn, :titlelong, :publisher, :pages, :user_id)
     end
 end

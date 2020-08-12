@@ -18,23 +18,22 @@
 <% totaltime = 0 %>
 <body>
 	<div class="container">
-			<table class="table is-striped is-hoverable table center">
-				<thead>
-					<tr>
-						<th></th>
-						<th>Title</th>
-						<th>Description</th>
-						<th>Seasons</th>
-						<th>Episodes</th>
-						<th>Rating</th>
-						<th>Airdate</th>
-						<th>User</th>
-						<th colspan="3"></th>
-					</tr>
-				</thead>
-
+		<table class="table is-striped is-hoverable table center">
+			<thead>
+				<tr>
+					<th></th>
+					<th>Title</th>
+					<th>Description</th>
+					<th>Seasons</th>
+					<th>Episodes</th>
+					<th>Rating</th>
+					<th>Airdate</th>
+					<th>User</th>
+					<th colspan="3"></th>
+				</tr>
+			</thead>
 				<tbody>
-					<% @shows.each.with_index(0) do |show, index| %>
+				<% @shows.each.with_index(0) do |show, index| %>
 					<tr>
 						<% if show.user_id == current_user.id %>
 						<td><%= "#{index}" %></td>
@@ -55,34 +54,33 @@
 						<td><%= link_to 'Destroy', show, method: :delete, data: { confirm: 'Are you sure?' } %></td>
 						<% end %>
 					</tr>
-					<% end %>
-				</tbody>
-			</table>
+				<% end %>
+			</tbody>
+		</table>
+		<table class="table is-striped is-hoverable table center">
+			<thead>
+				<tr>
+					<th>Stats:</th>
+					<th>Shows</th>
+					<th>Seasons</th>
+					<th>Episodes</th>
+					<th>Average Rating</th>
+					<th>Days Watched</th>
+					<th colspan="3"></th>
+				</tr>
+			</thead>
 
-			<table class="table is-striped is-hoverable table center">
-				<thead>
-					<tr>
-						<th>Stats:</th>
-						<th>Shows</th>
-						<th>Seasons</th>
-						<th>Episodes</th>
-						<th>Average Rating</th>
-						<th>Days Watched</th>
-						<th colspan="3"></th>
-					</tr>
-				</thead>
-
-				<tbody>
-					<tr>
-						<td>Totals:</td>
-						<td><p class="has-text-centered"><%= totalshows %></p></td>
-						<td><p class="has-text-centered"><%= totalseasons %></p></td>
-						<td><p class="has-text-centered"><%= totalepisodes %></p></td>
-						<td><p class="has-text-centered"><%= (averagerating / totalshows).round(2) %></p></td>
-						<td><p class="has-text-centered"><%= ((totaltime / 60.0) / 24.0).round(2) %> (<%= (totaltime / 60.0).round(2) %> hrs)</p></td>
-					</tr>
-				</tbody>
-			</table>
+			<tbody>
+				<tr>
+					<td>Totals:</td>
+					<td><p class="has-text-centered"><%= totalshows %></p></td>
+					<td><p class="has-text-centered"><%= totalseasons %></p></td>
+					<td><p class="has-text-centered"><%= totalepisodes %></p></td>
+					<td><p class="has-text-centered"><%= (averagerating / totalshows).round(2) %></p></td>
+					<td><p class="has-text-centered"><%= ((totaltime / 60.0) / 24.0).round(2) %> (<%= (totaltime / 60.0).round(2) %> hrs)</p></td>
+				</tr>
+			</tbody>
+		</table>
 	</div>
 	<br>
 </body>

@@ -27,7 +27,7 @@ class ShowsController < ApplicationController
   def create
 		result = Tmdb::TV.detail(show_params[:tmdbid])
 		@show = Show.new(show_params)
-		@show.title = result["original_name"]
+		@show.title = result["name"]
 		@show.description = result["overview"]
 		@show.seasons = result["number_of_seasons"]
 		@show.episodes = result["number_of_episodes"]
@@ -51,7 +51,7 @@ class ShowsController < ApplicationController
 	def update
 		respond_to do |format|
 			result = Tmdb::TV.detail(show_params[:tmdbid])
-			@show.title = result["original_name"]
+			@show.title = result["name"]
 			@show.description = result["overview"]
 			@show.seasons = result["number_of_seasons"]
 			@show.episodes = result["number_of_episodes"]

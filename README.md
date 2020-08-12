@@ -17,5 +17,6 @@ TODO:
 
 	- Add Goodreads imagery for API Usage
 
-	- Put default lists on homepage, ie imdb top 100 movies / tv and top book and comic lists
-	
+	- Put default lists on homepage
+			- imdb top 100 movies / tv
+			- top book and comic lists

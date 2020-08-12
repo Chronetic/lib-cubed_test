@@ -1,9 +1,16 @@
-<p id="notice"><%= notice %></p>
 <br>
 <div class="has-text-centered">
 	<strong>Shows</strong>
 </div>
 <br>
+<div class="level">
+	<div class="level-item">
+		<%= link_to 'Back', "home", class: "button is-info" %>
+	</div>
+	<div class="level-item">
+		<%= link_to 'New Show', new_show_path, class: "button is-success" %>
+	</div>
+</div>
 <% totalseasons = 0 %>
 <% totalepisodes = 0 %>
 <% averagerating = 0 %>
@@ -71,14 +78,11 @@
 						<td><p class="has-text-centered"><%= totalshows %></p></td>
 						<td><p class="has-text-centered"><%= totalseasons %></p></td>
 						<td><p class="has-text-centered"><%= totalepisodes %></p></td>
-						<td><p class="has-text-centered"><%= averagerating / totalshows %></p></td>
+						<td><p class="has-text-centered"><%= (averagerating / totalshows).round(2) %></p></td>
 						<td><p class="has-text-centered"><%= ((totaltime / 60.0) / 24.0).round(2) %> (<%= (totaltime / 60.0).round(2) %> hrs)</p></td>
 					</tr>
 				</tbody>
 			</table>
 	</div>
+	<br>
 </body>
-
-<br>
-<%= link_to 'Back', "home" %>
-<%= link_to 'New Show', new_show_path %>

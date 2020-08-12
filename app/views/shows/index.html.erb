@@ -1,11 +1,10 @@
 <br>
 <div class="has-text-centered">
-	<strong>Shows</strong>
+	<strong class="showfont has-text-dark">Your Shows</strong>
 </div>
-<br>
 <div class="level">
 	<div class="level-item">
-		<%= link_to 'Back', "home", class: "button is-info" %>
+		<%= link_to 'Back', "home", class: "button is-danger" %>
 	</div>
 	<div class="level-item">
 		<%= link_to 'New Show', new_show_path, class: "button is-success" %>
@@ -37,7 +36,7 @@
 					<tr>
 						<% if show.user_id == current_user.id %>
 						<td><%= "#{index}" %></td>
-						<td><strong><%= show.title %></strong></td>
+						<td><strong><%= link_to "#{show.title}", show %></strong></td>
 						<% totalshows+= 1 %>
 						<td><%= truncate show.description, length: 45, seperator: /\w+/ %></td>
 						<td><%= show.seasons %></td>
@@ -49,7 +48,6 @@
 						<% averagerating+= show.showrating %>
 						<td><%= show.airdate %></td>
 						<td><%= show.user_id %></td>
-						<td><%= link_to 'Show', show %></td>
 						<td><%= link_to 'Edit', edit_show_path(show) %></td>
 						<td><%= link_to 'Destroy', show, method: :delete, data: { confirm: 'Are you sure?' } %></td>
 						<% end %>

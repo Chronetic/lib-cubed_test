@@ -1,41 +1,75 @@
-<p id="notice"><%= notice %></p>
-
-<h1>Movies</h1>
-
-<table class="table is-striped">
-  <thead>
-    <tr>
-			<th></th>
-      <th>Title</th>
-      <th>Tagline</th>
-      <th>Runtime</th>
-			<th>Rating</th>
-			<th>Released</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-		<% #fix index %>
-    <% @movies.each.with_index(-8) do |movie, index| %>
-      <tr>
-				<% if movie.user_id == current_user.id %>
-					<td><%= "#{index}" %></td>
-	        <td><%= movie.title %></td>
-	        <td><%= movie.tagline %></td>
-	        <td><%= movie.runtime %></td>
-					<td><%= movie.movierating %></td>
-					<td><%= movie.release_date %></td>
-					<td><%= movie.user_id %></td>
-	        <td><%= link_to 'Show', movie %></td>
-	        <td><%= link_to 'Edit', edit_movie_path(movie) %></td>
-	        <td><%= link_to 'Destroy', movie, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-				<% end %>
-			</tr>
-    <% end %>
-  </tbody>
-</table>
-
 <br>
-<%= link_to 'Back', "home" %>
-<%= link_to 'New Movie', new_movie_path %>
+<div class="has-text-centered">
+	<strong class="showfont has-text-dark">Your Movies</strong>
+</div>
+<div class="level">
+	<div class="level-item">
+		<%= link_to 'Back', "home", class: "button is-danger" %>
+	</div>
+	<div class="level-item">
+		<%= link_to 'New Movie', new_movie_path, class: "button is-success" %>
+	</div>
+</div>
+
+<% averagerating = 0 %>
+<% totalmovies = 0 %>
+<% totalruntime = 0 %>
+
+<body>
+	<div class="container">
+		<table class="table is-striped is-hoverable table center">
+			<thead>
+				<tr>
+					<th></th>
+					<th><p class="has-text-centered">Title</p></th>
+					<th><p class="has-text-centered">Tagline</p></th>
+					<th><p class="has-text-centered">Rating</p></th>
+					<th><p class="has-text-centered">Runtime</p></th>
+					<th><p class="has-text-centered">Released</p></th>
+					<th colspan="3"></th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<% @movies.each.with_index(-8) do |movie, index| %>
+				<tr>
+					<% if movie.user_id == current_user.id %>
+					<td><%= "#{index}" %></td>
+					<td><p class="has-text-centered"><strong><%= link_to "#{movie.title}", movie %></strong></p></td>
+					<td><p class="has-text-centered"><%= movie.tagline %></p></td>
+					<td><p class="has-text-centered"><%= movie.movierating %></p></td>
+					<% averagerating+= movie.movierating %>
+					<td><p class="has-text-centered"><%= movie.runtime %></p></td>
+					<% totalruntime+= movie.runtime %>
+					<% totalmovies+= 1 %>
+					<td><p class="has-text-centered"><%= movie.release_date %></p></td>
+					<td><%= movie.user_id %></td>
+					<td><%= link_to 'Edit', edit_movie_path(movie) %></td>
+					<td><%= link_to 'Destroy', movie, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+					<% end %>
+				</tr>
+				<% end %>
+			</tbody>
+		</table>
+		<table class="table is-striped is-hoverable table center">
+			<thead>
+				<tr>
+					<th>Stats:</th>
+					<th>Movies</th>
+					<th>Average Rating</th>
+					<th>Days Watched</th>
+					<th colspan="3"></th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<tr>
+					<td>Totals:</td>
+					<td><p class="has-text-centered"><%= totalmovies %></p></td>
+					<td><p class="has-text-centered"><%= (averagerating / totalmovies).round(2) %></p></td>
+					<td><p class="has-text-centered"><%= ((totalruntime / 60.0) / 24.0).round(2) %> (<%= (totalruntime / 60.0).round(2) %> hrs)</p></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>

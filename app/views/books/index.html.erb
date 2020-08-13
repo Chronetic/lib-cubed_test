@@ -36,7 +36,7 @@
 				<tr>
 					<% if book.user_id == current_user.id %>
 					<td><%= "#{index}" %></td>
-					<td><p class="has-text-centered"><%= link_to "#{book.title}", book %></p></td>
+					<td><p class="has-text-centered"><strong><%= link_to "#{book.title}", book %></strong></p></td>
 					<td><%= truncate book.description, length: 100, seperator: /\w+/ %></td>
 					<td><p class="has-text-centered"><%= book.author %></p></td>
 					<td><p class="has-text-centered"><%= book.bookrating %></p></td>
@@ -45,7 +45,6 @@
 					<% totalpages+= book.pages %>
 					<% totalbooks+= 1 %>
 					<td><%= book.user_id %></td>
-					<td><%= link_to 'Show', book %></td>
 					<td><%= link_to 'Edit', edit_book_path(book) %></td>
 					<td><%= link_to 'Destroy', book, method: :delete, data: { confirm: 'Are you sure?' } %></td>
 					<% end %>

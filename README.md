@@ -1,13 +1,12 @@
 # README
 TODO:
 
-	- Hook up comics list to Goodreads API
+	- DONE => [Hook up comics list to Goodreads API]
+	- DONE => [Style Book, Movie, and Comics lists]
 
 	- Add Current_User Rating to all items on all lists
 
 	- Fix up show pages for items
-
-	- Style Book, Movie, and Comics lists
 
 	- Misc. Style Stuff
 

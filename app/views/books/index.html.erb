@@ -37,7 +37,7 @@
 					<% if book.user_id == current_user.id %>
 					<td><%= "#{index}" %></td>
 					<td><p class="has-text-centered"><strong><%= link_to "#{book.title}", book %></strong></p></td>
-					<td><p class="has-text-centered"><%= truncate book.description, length: 100, seperator: /\w+/ %></p></td>
+					<td><p class="has-text-centered"><%= truncate book.description, length: 90, seperator: /\w+/ %></p></td>
 					<td><p class="has-text-centered"><%= book.author %></p></td>
 					<td><p class="has-text-centered"><%= book.bookrating %></p></td>
 					<% averagerating+= book.bookrating %>

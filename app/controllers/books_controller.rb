@@ -42,6 +42,7 @@ class BooksController < ApplicationController
 		puts @book.description#.gsub(/<br\s*\?>/, '')
 		@book.title = book.work.original_title
 		@book.pages = book.num_pages
+		@book.bookrating = book.average_rating
 		@book.author = book.authors.author.name
 		@book.publisher = book.publisher
 
@@ -78,6 +79,7 @@ class BooksController < ApplicationController
 			@book.description = strip_tags(book.description)
 			@book.title = book.work.original_title
 			@book.pages = book.num_pages
+			@book.bookrating = book.average_rating
 			@book.author = book.authors.author.name
 			@book.publisher = book.publisher
 			@book.save
@@ -104,6 +106,6 @@ class BooksController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def book_params
-      params.require(:book).permit(:title, :description, :author, :isbn, :titlelong, :publisher, :pages, :user_id)
+      params.require(:book).permit(:title, :description, :author, :isbn, :titlelong, :publisher, :pages, :bookrating, :user_id)
     end
 end

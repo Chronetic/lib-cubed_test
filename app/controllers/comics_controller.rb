@@ -1,4 +1,5 @@
 class ComicsController < ApplicationController
+	include ActionView::Helpers::TextHelper
   before_action :set_comic, only: [:show, :edit, :update, :destroy]
 
   # GET /comics
@@ -24,7 +25,24 @@ class ComicsController < ApplicationController
   # POST /comics
   # POST /comics.json
   def create
-    @comic = Comic.new(comic_params)
+		client = Goodreads::Client.new(api_key: "rSkvvZY8Wx27zcj4AfHA", api_secret: "S5WOpmY8pVtaEu1IwNn51DBafjoEIbjuxZdE6sNM")
+		comic = client.book_by_isbn(comic_params[:isbn])
+		@comic = Comic.new(comic_params)
+
+#		puts book.title
+#		puts book.description
+#		puts book.work.original_title
+#		puts book.num_pages
+#		puts book.authors.author.name
+#		puts book.publisher
+
+		@comic.description = strip_tags(comic.description)
+		puts @comic.description#.gsub(/<br\s*\?>/, '')
+		@comic.title = comic.title
+		@comic.pages = comic.num_pages
+		@comic.author = comic.authors.author[0].name
+		@comic.comicrating = comic.average_rating
+		puts @comic.comicrating
 
     respond_to do |format|
       if @comic.save
@@ -40,15 +58,18 @@ class ComicsController < ApplicationController
   # PATCH/PUT /comics/1
   # PATCH/PUT /comics/1.json
   def update
-    respond_to do |format|
-      if @comic.update(comic_params)
-        format.html { redirect_to @comic, notice: 'Comic was successfully updated.' }
-        format.json { render :show, status: :ok, location: @comic }
-      else
-        format.html { render :edit }
-        format.json { render json: @comic.errors, status: :unprocessable_entity }
-      end
-    end
+		respond_to do |format|
+			client = Goodreads::Client.new(api_key: "rSkvvZY8Wx27zcj4AfHA", api_secret: "S5WOpmY8pVtaEu1IwNn51DBafjoEIbjuxZdE6sNM")
+			comic = client.book_by_isbn(comic_params[:isbn])
+			@comic.description = strip_tags(comic.description)
+	 		@comic.title = comic.title
+	 		@comic.pages = comic.num_pages
+	 		@comic.author = comic.authors.author[0].name
+	 		@comic.comicrating = comic.average_rating
+			@comic.save
+			format.html { redirect_to @comic, notice: 'Comic was successfully updated.' }
+			format.json { render :show, status: :ok, location: @comic }
+		end
   end
 
   # DELETE /comics/1
@@ -69,6 +90,6 @@ class ComicsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def comic_params
-      params.require(:comic).permit(:title, :description, :author, :artist, :user_id)
+      params.require(:comic).permit(:title, :description, :author, :isbn, :pages, :user_id)
     end
 end

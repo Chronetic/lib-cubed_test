@@ -1,36 +1,75 @@
-<p id="notice"><%= notice %></p>
-
-<h1 class="title is-3">Books</h1><br>
-
-<table class="table is-striped">
-  <thead>
-    <tr>
-      <th></th>
-			<th>Title</th>
-			<th>Author</th>
-			<th>ID</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @books.each.with_index(1) do |book, index| %>
-      <tr>
-				<% if book.user_id == current_user.id %>
-				<td><%= "#{index}" %></td>
-        <td><%= link_to "#{book.title}", book %></td>
-				<td><%= book.author %></td>
-				<td><%= book.user_id %></td>
-        <td><%= link_to 'Show', book %></td>
-        <td><%= link_to 'Edit', edit_book_path(book) %></td>
-        <td><%= link_to 'Destroy', book, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-				<% end %>
-			</tr>
-    <% end %>
-  </tbody>
-</table>
-
 <br>
+<div class="has-text-centered">
+	<strong class="showfont has-text-dark">Your Books</strong>
+</div>
+<div class="level">
+	<div class="level-item">
+		<%= link_to 'Back', "home", class: "button is-danger" %>
+	</div>
+	<div class="level-item">
+		<%= link_to 'New Book', new_book_path, class: "button is-success" %>
+	</div>
+</div>
 
-<%= link_to 'Back', "home" %>
-<%= link_to 'Add Book', new_book_path %>
+<% averagerating = 0 %>
+<% totalbooks = 0 %>
+<% totalpages = 0 %>
+
+<body>
+	<div class="container">
+		<table class="table is-striped is-hoverable table center">
+			<thead>
+				<tr>
+					<th></th>
+					<th>Title</th>
+					<th>Author</th>
+					<th>Rating</th>
+					<th>Pages</th>
+					<th>ID</th>
+					<th colspan="3"></th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<% @books.each.with_index(1) do |book, index| %>
+				<tr>
+					<% if book.user_id == current_user.id %>
+					<td><%= "#{index}" %></td>
+					<td><%= link_to "#{book.title}", book %></td>
+					<td><%= book.author %></td>
+					<td><%= book.bookrating %></td>
+					<% averagerating+= book.bookrating %>
+					<td><%= book.pages %></td>
+					<% totalpages+= book.pages %>
+					<% totalbooks+= 1 %>
+					<td><%= book.user_id %></td>
+					<td><%= link_to 'Show', book %></td>
+					<td><%= link_to 'Edit', edit_book_path(book) %></td>
+					<td><%= link_to 'Destroy', book, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+					<% end %>
+				</tr>
+				<% end %>
+			</tbody>
+		</table>
+		<table class="table is-striped is-hoverable table center">
+			<thead>
+				<tr>
+					<th>Stats:</th>
+					<th>Books</th>
+					<th>Average Rating</th>
+					<th>Total Pages</th>
+					<th colspan="3"></th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<tr>
+					<td>Totals:</td>
+					<td><p class="has-text-centered"><%= totalbooks %></p></td>
+					<td><p class="has-text-centered"><%= (averagerating / totalbooks).round(2) %></p></td>
+					<td><p class="has-text-centered"><%= totalpages %></p></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>

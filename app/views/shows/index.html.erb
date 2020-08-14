@@ -1,15 +1,23 @@
-<%= form_with url: "shows", local: true, method: 'get' do |f| %>
-  <%= f.label 'Title:' %>
-  <%= f.text_field :data %><br><br>
-  <%= f.submit 'Submit' %>
-<% end %>
-
-<% if @results %>
-	<%= puts @results %>
-	<%= puts @results[0]['original_name'] %>
-	<%= puts "hello" %>
 
 	<body>
+		<div class="columns">
+			<div class="column"></div>
+			<div class="column has-text-centered">
+				<br>
+				<%= form_with url: "shows", local: true, method: 'get' do |f| %>
+				<%= f.text_field :data, :class => "input", placeholder: "Show Title" %>
+				<p><br></p>
+				<%= f.submit "Search", :class => "button is-primary" %>
+				<% end %>
+			</div>
+			<div class="column"></div>
+		</div>
+
+		<% if @results %>
+		<%= puts @results %>
+		<%= puts @results[0]['original_name'] %>
+		<%= puts "hello" %>
+
 		<div class="container">
 			<table class="table is-striped is-hoverable table center">
 				<thead>
@@ -36,9 +44,9 @@
 								<td><%= simple_form_for(@show) do |f| %>
 								<%= f.error_notification %>
 								<%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
-									<%= f.input :tmdbid, :as => :hidden, :input_html => { :value => result["id"]}%>
-									<%= f.input :user_id, :as => :hidden, :input_html => { :value => "#{current_user.id}" } %>
-									<%= f.button :submit, label: 'Add' %>
+									<%= f.hidden_field :tmdbid, :value => result["id"]%>
+									<%= f.hidden_field :user_id, :value => "#{current_user.id}" %>
+									<%= f.button :submit, "Add Show" %>
 								<% end %></td>
 							<% end %>
 							<% if (actual_index >= 10) %>
@@ -86,10 +94,11 @@
 				</tr>
 			</thead>
 				<tbody>
+				<% real_index = 0 %>
 				<% @shows.each.with_index(1) do |show, index| %>
 					<tr>
 						<% if show.user_id == current_user.id %>
-							<td><%= "#{index}" %></td>
+							<td><%= "#{real_index+= 1}" %></td>
 							<td><p class="has-text-centered"><strong><%= link_to "#{show.title}", show %></strong></p></td>
 							<% totalshows+= 1 %>
 							<td><p class="has-text-centered"><%= truncate show.description, length: 45, seperator: /\w+/ %></p></td>

@@ -5,11 +5,13 @@
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
   <div class="form-inputs">
-    <%= f.input :tmdbid, label: 'TMDB Id:'%>
+    <%= f.input :tmdbid, label: 'Show ID:'%>
 		<%= f.input :user_id, :input_html => { :value => "#{current_user.id}" } %>
   </div>
 
   <div class="form-actions">
-    <%= f.button :submit %>
+    <%= f.button :submit, label: 'Search' %>
   </div>
 <% end %>
+
+<%= puts "hello" %>

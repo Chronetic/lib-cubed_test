@@ -1,10 +1,19 @@
 class ShowsController < ApplicationController
-  before_action :set_show, only: [:show, :edit, :update, :destroy]
+  before_action :set_show, only: [:show, :edit, :update, :destroy, :search]
 	Tmdb::Api.key("87629cf821826e9275d3da823078cec7")
 
   # GET /shows
   # GET /shows.json
   def index
+		if (params[:data] != '')
+			@show = Show.new
+			@search = Tmdb::Search.new
+			@search.resource('tv') # determines type of resource
+			@search.query(params[:data]) # the query to search against
+			@results = @search.fetch # makes request
+			#https://image.tmdb.org/t/p/w300_and_h450_bestv2
+		end
+
     @shows = Show.all
   end
 
@@ -34,6 +43,7 @@ class ShowsController < ApplicationController
 		@show.episoderuntime = result["episode_run_time"].dig(0)
 		@show.showrating = result["vote_average"]
 		@show.airdate = result["first_air_date"]
+
 
     respond_to do |format|
       if @show.save

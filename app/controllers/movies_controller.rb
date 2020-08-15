@@ -4,6 +4,15 @@ class MoviesController < ApplicationController
   # GET /movies
   # GET /movies.json
   def index
+		if (params[:data] != '')
+			@movie = Movie.new
+			@search = Tmdb::Search.new
+			@search.resource('movie') # determines type of resource
+			@search.query(params[:data]) # the query to search against
+			@results = @search.fetch # makes request
+			#https://image.tmdb.org/t/p/w300_and_h450_bestv2
+		end
+
     @movies = Movie.all
   end
 

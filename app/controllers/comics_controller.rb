@@ -5,6 +5,20 @@ class ComicsController < ApplicationController
   # GET /comics
   # GET /comics.json
   def index
+		if (params[:data] != nil)
+			@comic = Comic.new
+			@client = Goodreads::Client.new(api_key: "rSkvvZY8Wx27zcj4AfHA", api_secret: "S5WOpmY8pVtaEu1IwNn51DBafjoEIbjuxZdE6sNM")
+			@search = @client.search_books(params[:data])
+			#@search = @client.search_books("the lord of the rings")
+			#puts @search.total_results
+			#puts @search
+			if (@search.total_results == 1)
+				@results = @search
+			else
+				@results = @search.results.work
+			end
+			#https://image.tmdb.org/t/p/w300_and_h450_bestv2
+		end
     @comics = Comic.all
   end
 
@@ -40,7 +54,11 @@ class ComicsController < ApplicationController
 		puts @comic.description#.gsub(/<br\s*\?>/, '')
 		@comic.title = comic.title
 		@comic.pages = comic.num_pages
-		@comic.author = comic.authors.author[0].name
+		if (comic.authors.author[0] != nil)
+			@comic.author = comic.authors.author[0].name
+		else
+			@comic.author = comic.authors.author.name
+		end
 		@comic.comicrating = comic.average_rating
 		puts @comic.comicrating
 

@@ -5,7 +5,7 @@ class ShowsController < ApplicationController
   # GET /shows
   # GET /shows.json
   def index
-		if (params[:data] != '')
+		if (params[:data] != nil)
 			@show = Show.new
 			@search = Tmdb::Search.new
 			@search.resource('tv') # determines type of resource

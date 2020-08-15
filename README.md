@@ -18,6 +18,10 @@ TODO:
 
 	- See if sorting is possible with how the list are currently setup
 
+	- Add Time Taken for books, using avg wpm and wordcount in book
+		- Have users be able to put their avg wpm in for use in statistics
+		- Also add time taken column for each book for each user to use instead of avg wpm
+
 	- Add Goodreads imagery for API Usage
 
 	- Put default lists on homepage

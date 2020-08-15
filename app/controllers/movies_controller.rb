@@ -4,7 +4,7 @@ class MoviesController < ApplicationController
   # GET /movies
   # GET /movies.json
   def index
-		if (params[:data] != '')
+		if (params[:data] != nil)
 			@movie = Movie.new
 			@search = Tmdb::Search.new
 			@search.resource('movie') # determines type of resource

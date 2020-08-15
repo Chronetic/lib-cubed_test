@@ -6,6 +6,15 @@ class BooksController < ApplicationController
   # GET /books
   # GET /books.json
   def index
+		if (params[:data] != nil)
+			@book = Book.new
+			@client = Goodreads::Client.new(api_key: "rSkvvZY8Wx27zcj4AfHA", api_secret: "S5WOpmY8pVtaEu1IwNn51DBafjoEIbjuxZdE6sNM")
+			@search = @client.search_books(params[:data])
+			#@search = @client.search_books("the lord of the rings")
+			@results = @search.results.work
+			#https://image.tmdb.org/t/p/w300_and_h450_bestv2
+		end
+
     @books = Book.all
   end
 

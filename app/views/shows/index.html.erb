@@ -40,7 +40,7 @@
 						<% @results.each.with_index(1) do |result, index| %>
 							<tr>
 								<% if (result["overview"] != '') %>
-									<td><%= "#{actual_index+= 1}" %></td>
+									<td><p class="has-text-centered"><%= "#{actual_index+= 1}" %></p></td>
 									<td><img src=https://image.tmdb.org/t/p/w150_and_h225_bestv2<%=result["poster_path"]%> style="width:75px;height:112px"></td>
 									<td><p class="has-text-centered"><strong><%= result["original_name"] %></strong></p></td>
 									<td><p class="has-text-centered"><%= truncate result["overview"], length: 45, seperator: /\w+/ %></p></td>
